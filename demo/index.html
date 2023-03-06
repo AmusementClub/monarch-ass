@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Monaco Ass Editor</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  </head>
+  <body>
+    <h2>Monaco Editor Ass Demo</h2>
+    <div id="container">
+      <div id="token"></div>
+      <div id="editor"></div>
+    </div>
+
+    <!-- OR ANY OTHER AMD LOADER HERE INSTEAD OF loader.js -->
+    <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.36.1/min/vs/loader.js"></script>
+    <script src="ass.js"></script>
+    <script>
+      require.config({
+        paths: {
+          vs: "https://cdn.jsdelivr.net/npm/monaco-editor@0.36.1/min/vs",
+        },
+      });
+      require(["vs/editor/editor.main"], function () {
+        // Register a new language
+        monaco.languages.register({ id: "subStationAlpha4+" });
+        // Register a tokens provider for the language
+        monaco.languages.setMonarchTokensProvider(
+          "subStationAlpha4+",
+          tokenize
+        );
+        var asseditor = monaco.editor.create(
+          document.getElementById("editor"),
+          {
+            language: "subStationAlpha4+",
+          }
+        );
+        fetch(
+          "[Nekomoe kissaten&LoliHouse] Koukyuu no Karasu - 01 [WebRip 1080p HEVC-10bit AAC ASSx2].JPSC.ass"
+        )
+          .then((response) => response.text())
+          .then((text) => {
+            asseditor.setValue(text);
+          });
+        var tokeneditor = monaco.editor.create(
+          document.getElementById("token"),
+          {
+            language: "javascript",
+          }
+        );
+        fetch("ass.js")
+          .then((response) => response.text())
+          .then((text) => {
+            tokeneditor.setValue(text);
+          });
+      });
+    </script>
+  </body>
+  <style>
+    h2 {
+      margin: auto, 8em;
+      text-align: center;
+    }
+    #container {
+      display: flex;
+      flex: auto;
+    }
+    #token {
+      width: 48%;
+      height: 600px;
+      margin: auto;
+      border: 1px solid black;
+    }
+    #editor {
+      width: 48%;
+      height: 600px;
+      margin: auto;
+      border: 1px solid black;
+    }
+  </style>
+</html>
