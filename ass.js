@@ -32,6 +32,7 @@ const tokenize = {
 
   styleKey: ["Format", "Style"],
 
+  //List all supported tags here. Unsupported tags will be marked as error.
   effectTag: [
     "i",
     "b",
